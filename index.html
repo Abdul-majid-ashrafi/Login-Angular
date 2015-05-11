@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css">
+    <script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+
+
+
+    <script>
+        angular.module('myApp',[])
+                .controller('signUpCtrl', function ($scope,$rootScope) {
+                    $rootScope.users=[];
+                    $scope.user={
+                        name:"",
+                        email:"",
+                        pass:"",
+                        class:"seven"
+                    };
+                    $scope.signUpUser=function(){
+                        $rootScope.users.push($scope.user);
+                        alert("Sign Up");
+                       };
+                })
+                .controller('loginCtrl', function ($scope,$rootScope) {
+                    $scope.loginUser= function (user) {
+                        for(var i=0;i<$rootScope.users.length;i++){
+                            if(user.email == $rootScope.users[i].email
+                                    && user.pass == $rootScope.users[i].pass){
+                                $rootScope.names=$rootScope.users[i].name;
+                                $rootScope.emails=$rootScope.users[i].email;
+                                $rootScope.class=$rootScope.users[i].class;
+                                alert("Login Successful !");
+                                break;
+                            }else{alert("Please Enter Your Correct Login")}
+                        }
+                    }
+                })
+    </script>
+</head>
+<body ng-app="myApp">
+<div ng-controller="signUpCtrl">
+    <h3>Sign Up</h3>
+    <form ng-submit="signUpUser()">
+        <input type="text" placeholder="Name" ng-model="user.name">
+        <input type="text"placeholder="Class"ng-model="user.class"/> <br/>
+        <mark>Selected</mark> <select >
+        <option value="sub" >Science</option>
+        <option value="com">Computer</option>
+        <option value="eng">English</option>
+        <option value="urdu">Urdu</option>
+        <option value="math">Math</option>
+    </select><br/>
+        <input type="email" placeholder="Email" ng-model="user.email">
+        <input type="password" placeholder="Password" ng-model="user.pass">
+        <input type="submit" value="Sign Up">
+    </form>
+</div> <br/><hr/>
+<div ng-controller="loginCtrl">
+ <h2>Login</h2>
+     <form ng-submit="loginUser(user)">
+        <input type="email" placeholder="Email" ng-model="user.email">
+        <input type="password" placeholder="Password" ng-model="user.pass">
+        <input type="submit" value="Login">
+    </form>
+
+    {{names}}<br/>{{emails}}<br/>{{class}}
+</div>
+</body>
+</html>
+
